@@ -19,7 +19,7 @@ app.use('/api', todoRoutes);
 app.use('/', authRoutes);
 
 
-const dbURI = process.env.MONGO_URI || "mongodb://mongodb/todo"
+const dbURI: string = process.env.MONGO_URI || "mongodb://mongodb/todo"
 
 mongoose.connect(dbURI, {
   useUnifiedTopology: true,

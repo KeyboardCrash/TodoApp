@@ -26,8 +26,7 @@ router.get('/', function(req, res, next) {
  * Returns the Todo object found
  */
 router.get('/todo/:id', auth_middlewares.verifyJWT, async function(req, res) {
-    const {id, username} = req.user;
-    const requestedId = req.params.id;
+    const requestedId: string = req.params.id;
 
     const todo = await TodoModel.findById(requestedId).exec();
 
@@ -55,7 +54,7 @@ router.get('/todo/:id', auth_middlewares.verifyJWT, async function(req, res) {
  */
  router.post('/todo/', auth_middlewares.verifyJWT, async function(req, res) {
     
-    const todo = req.body.todo;
+    const todo: string = req.body.todo;
     const {id, username} = req.user;
     // console.log(todo)
     // console.log(id, username)
@@ -95,8 +94,8 @@ router.get('/todo/:id', auth_middlewares.verifyJWT, async function(req, res) {
 router.patch('/todo/:id', auth_middlewares.verifyJWT, async function (req, res) {
     const {id, username} = req.user
 
-    const updatePayload = req.body.payload
-    const todoId = req.params.id
+    const updatePayload: object = req.body.payload
+    const todoId: string = req.params.id
 
     if (todoId && updatePayload) {
         let todo = await TodoModel.findOneAndUpdate({id: todoId}, {payload: updatePayload}, {
@@ -124,7 +123,7 @@ router.delete('/todo/:id/', auth_middlewares.verifyJWT, async function(req, res)
     
     const {id, username} = req.user;
 
-    const todoId = req.params.id;
+    const todoId: string = req.params.id;
     // console.log(todo)
     // console.log(id, username)
 

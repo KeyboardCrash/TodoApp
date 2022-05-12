@@ -22,7 +22,7 @@ router.post('/register', async function(req, res, next) {
             message: "Username or password not provided"
         })
     }
-    let user = await UserModel.findOne({ username }).exec();
+    const user = await UserModel.findOne({ username }).exec();
     if (user) {
         res.status(500).json({
             message: "User already exists"
