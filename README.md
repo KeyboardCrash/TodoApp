@@ -1,7 +1,7 @@
 # TodoApp
  A fullstack todo app on the MERN stack.
 
- This is a learning project for me to explore all of the technology and ideas behind creating a full stack application.
+ This is a learning project for me to explore all of the technology and ideas behind creating a full stack application. My goal for this project was to learn about authentication, storing data in MongoDB and returning JWT's to be used for authentication with middlewares.
 
  It will use React for the frontend web app, which will communicate with a Node/Express API over standard HTTP methods.
 
