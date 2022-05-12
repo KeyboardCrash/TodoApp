@@ -4,14 +4,20 @@ const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
+const mongoSanitize = require('express-mongo-sanitize');
 
 const app = express();
 const port = 3000;
 const urlencodedParser = bodyParser.urlencoded({ extended: false});
 
-app.use(cors())
+app.use(cors());
 app.use(bodyParser.json(), urlencodedParser);
+app.use(mongoSanitize({
+        onSanitize: ({req, key}) => {
+            console.warn(`This request[${key}] is sanitized`, req);
+        }
+    }),
+);
 
 const todoRoutes = require('./routes/todo');
 const authRoutes = require('./routes/auth');
