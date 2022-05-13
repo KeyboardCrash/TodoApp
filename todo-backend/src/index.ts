@@ -1,5 +1,4 @@
 import 'dotenv/config'
-import { v4 as uuidv4} from 'uuid';
 const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -22,7 +21,7 @@ app.use(mongoSanitize({
 const todoRoutes = require('./routes/todo');
 const authRoutes = require('./routes/auth');
 app.use('/api', todoRoutes);
-app.use('/', authRoutes);
+app.use('/api', authRoutes);
 
 
 const dbURI: string = process.env.MONGO_URI || "mongodb://mongodb/todo"

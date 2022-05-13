@@ -11,7 +11,7 @@ services:
       - ./nodemon.json:/usr/app/nodemon.json
     command: npm run dev
     ports:
-      - "3000:3000"
+      - "7999:3000"
     depends_on:
       - mongodb
     environment:
