@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import ReactDOM from 'react-dom';
 
 import './Todo.css';
 
@@ -72,7 +70,7 @@ const Todo = (props) => {
                     style={{width: "80%"}}
                     onChange={(e) => { setTodoText(e.target.value) }}
                     onKeyDown={(event) => {
-                        if (event.key == 'Enter' || event.key == 'Escape') {
+                        if (event.key === 'Enter' || event.key === 'Escape') {
                             setToggle(true)
                             update();
                             event.preventDefault()

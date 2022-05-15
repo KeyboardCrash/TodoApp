@@ -5,32 +5,35 @@ import { toast } from 'react-toastify';
 
 import './Home.css';
 import Todo from '../Todo/Todo';
+import helper from '../../lib/helper';
 
 const Home = (props) => {
     const [ todos, setTodos ] = useState([]);
     const [ username, setUsername ] = useState("");
     const [ newTodo, setNewTodo ] = useState("");
 
-    useEffect(() => {
-        getUsername();
-        getTodos();
-    }, []);
-
     async function getTodos() {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
+
             fetch('http://localhost:7999/api/getAllTodos', {
                 method: 'GET',
                 headers: {
-                  'Content-Type': 'application/json',
-                  'x-access-token': accessToken
+                    'Content-Type': 'application/json',
+                    'x-access-token': accessToken
                 },
-            }).then(res => res.json())
+            })
+            .then(res => res.json())
             .then(data => {
                 const parsedTodos = data.message
                 setTodos(parsedTodos)
                 console.log("Todos updated")
+            })
+            .catch(e => {
+                helper.failedToConnectAlert();
+                console.log(e);
             });
+
         } else {
             console.log('no access token');
         }
@@ -42,8 +45,8 @@ const Home = (props) => {
             fetch('http://localhost:7999/api/todo', {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json',
-                  'x-access-token': accessToken
+                    'Content-Type': 'application/json',
+                    'x-access-token': accessToken
                 },
                 body: JSON.stringify({
                     'todo': todo
@@ -52,17 +55,22 @@ const Home = (props) => {
                 if (res.ok) {
                     const notify = () => toast(`Successfully created todo!`, {
                         toastId: 'createdTodo'
-                      });
+                        });
                     notify();
                     console.log('Created todo data')
                     return res.json()
                 } else {
                     const notify = () => toast.error(`Error: ${res.message}`, {
                         toastId: 'failedCreateTodo'
-                      });
+                        });
                     notify();
                 }
+            })
+            .catch(e => {
+                helper.failedToConnectAlert();
+                console.log(e);
             });
+
         } else {
             console.log('no access token');
         }
@@ -87,6 +95,10 @@ const Home = (props) => {
                 console.log("Delete, then Todo Data updated");
                 setTodos(data.todos);
                 console.log(todos)
+            })
+            .catch(e => {
+                helper.failedToConnectAlert();
+                console.log(e);
             });
         } else {
             console.log('no access token');
@@ -99,8 +111,8 @@ const Home = (props) => {
             fetch('http://localhost:7999/api/getUsername', {
                 method: 'GET',
                 headers: {
-                  'Content-Type': 'application/json',
-                  'x-access-token': accessToken
+                    'Content-Type': 'application/json',
+                    'x-access-token': accessToken
                 },
             }).then(res => {
                 if (res.ok) {
@@ -109,6 +121,10 @@ const Home = (props) => {
             }).then(data => {
                 console.log("Username data updated");
                 setUsername(data.username);
+            })
+            .catch(e => {
+                helper.failedToConnectAlert();
+                console.log(e);
             });
         } else {
             console.log('no access token');
@@ -137,6 +153,10 @@ const Home = (props) => {
                 }
             }).then(data => {
                 console.log(data);
+            })
+            .catch(e => {
+                helper.failedToConnectAlert();
+                console.log(e);
             });
         } else {
             console.log('no access token');
@@ -147,10 +167,15 @@ const Home = (props) => {
         event.preventDefault();
     
         const todo = newTodo;
-        const res = await createTodo(todo)
+        await createTodo(todo)
         .then(() => { setNewTodo(''); })
         .then(() => { getTodos(); })
     }
+
+    useEffect(() => {
+        getUsername();
+        getTodos();
+    }, []);
 
     return (
         <div className="Home">
