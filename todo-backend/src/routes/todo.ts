@@ -167,7 +167,10 @@ router.get('/getAllTodos', auth_middlewares.verifyJWT, async function(req, res) 
     // console.log(todo)
     // console.log(id, username)
     console.log(`Get all todos`)
-    const todos = await TodoModel.find();
+    // const todos = await TodoModel.find();
+    const todos = await TodoModel.find({
+        userId: id
+    });
     console.log(todos)
     res.json({message: todos})
 });

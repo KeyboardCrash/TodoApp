@@ -82,8 +82,10 @@ function App() {
         <div className="App py-3">
             <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
                 <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
+
                     <LinkContainer to="/">
                         <Navbar.Brand className="font-weight-bold text-muted">
+                            <img src="./logo192.png" width="30" height="30" alt="" />
                             Todo App
                         </Navbar.Brand>
                     </LinkContainer>
