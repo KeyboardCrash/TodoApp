@@ -14,7 +14,7 @@ const Home = (props) => {
     useEffect(() => {
         getUsername();
         getTodos();
-    }, [props.todos]);
+    }, []);
 
     async function getTodos() {
         const accessToken = localStorage.getItem('accessToken');
@@ -25,13 +25,11 @@ const Home = (props) => {
                   'Content-Type': 'application/json',
                   'x-access-token': accessToken
                 },
-            }).then(res => {
-                if (res.ok) {
-                    return res.json()
-                }
-            }).then(data => {
-                console.log("Todo Data updated");
-                setTodos(data.message);
+            }).then(res => res.json())
+            .then(data => {
+                const parsedTodos = data.message
+                setTodos(parsedTodos)
+                console.log("Todos updated")
             });
         } else {
             console.log('no access token');
@@ -70,9 +68,10 @@ const Home = (props) => {
         }
     }
 
-    async function deleteTodo(todoData) {
+    async function deleteTodo(id) {
         const accessToken = localStorage.getItem('accessToken');
-        const todoId = todoData.data.id;
+        const todoId = id
+        console.log(`Requested todo id ${todoId}`);
         if (accessToken) {
             fetch(`http://localhost:7999/api/todo/${todoId}`, {
                 method: 'DELETE',
@@ -86,7 +85,8 @@ const Home = (props) => {
                 }
             }).then(data => {
                 console.log("Delete, then Todo Data updated");
-                getTodos();
+                setTodos(data.todos);
+                console.log(todos)
             });
         } else {
             console.log('no access token');
@@ -115,13 +115,41 @@ const Home = (props) => {
         }
     }
     
+    async function updateTodo(todoObj) {
+        const accessToken = localStorage.getItem('accessToken');
+        console.log(todoObj)
+        const todoId = todoObj.todoId;
+        const payload = todoObj.payload;
+
+        if (accessToken) {
+            fetch(`http://localhost:7999/api/todo/${todoId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': accessToken
+                },
+                body: JSON.stringify({
+                    payload: payload
+                })
+            }).then(res => {
+                if (res.ok) {
+                    return res.json()
+                }
+            }).then(data => {
+                console.log(data);
+            });
+        } else {
+            console.log('no access token');
+        }
+    }
+
     async function handleSubmit(event) {
         event.preventDefault();
     
         const todo = newTodo;
-        const res = await createTodo(todo);
-        setNewTodo('');
-        getTodos();
+        const res = await createTodo(todo)
+        .then(() => { setNewTodo(''); })
+        .then(() => { getTodos(); })
     }
 
     return (
@@ -148,7 +176,6 @@ const Home = (props) => {
                     </Button>
 
                 </Form>
-                {console.log(todos)}
 
                 {/* <ul>
                 {todos.map((todo, i) => {
@@ -157,7 +184,7 @@ const Home = (props) => {
                 </ul> */}
 
                 {todos.map((todo, i) => {
-                    return < Todo data = {todo} deleteTodo={deleteTodo} getTodos={getTodos} />
+                    return <Todo key = {todo._id} data = {todo} deleteTodo = {deleteTodo} getTodos = {getTodos} updateTodo = {updateTodo}/>
                 })}
             </div>
         </div>

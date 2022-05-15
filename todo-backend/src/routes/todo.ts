@@ -98,7 +98,7 @@ router.patch('/todo/:id', auth_middlewares.verifyJWT, async function (req, res) 
     const todoId: string = req.params.id
 
     if (todoId && updatePayload) {
-        let todo = await TodoModel.findOneAndUpdate({id: todoId}, {payload: updatePayload}, {
+        let todo = await TodoModel.findOneAndUpdate({_id: todoId}, {payload: updatePayload}, {
             new: true
         });
 
@@ -128,16 +128,22 @@ router.delete('/todo/:id/', auth_middlewares.verifyJWT, async function(req, res)
     // console.log(id, username)
 
     if (todoId) {
-        console.log(`Deleting todo ${todoId}`)
-        const ret = await TodoModel.deleteOne({
-            id: todoId
-        });
-        console.log(ret)
-        if (ret.deletedCount) {
-            res.status(202).json({
-                message: `Deleted Todo ${todoId}`
-            });
-        } else {
+        try {
+            const ret = await TodoModel.deleteOne({
+                _id: todoId
+            }); 
+            if (ret.deletedCount) {
+                const todos = await TodoModel.find();
+                res.status(202).json({
+                    message: `Deleted Todo ${todoId}`,
+                    todos: todos
+                });
+            }  else {
+                res.status(500).json({
+                    message: `Failed to delete Todo ${todoId}`
+                })
+            }
+        } catch (e) {
             res.status(500).json({
                 message: `Failed to delete Todo ${todoId}`
             })
