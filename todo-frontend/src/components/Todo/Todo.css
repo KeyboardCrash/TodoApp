@@ -1,0 +1,27 @@
+
+.Todo {
+    padding: 15px;
+    color: #434343;
+    border-radius: 1px;
+    margin-bottom: 15px;
+    background: #fff;
+    border: 1px solid #f3f3f3;
+    box-shadow: 0px 2px 2px rgb(0 0 0 / 30%);
+    display: flex;
+}
+
+input[type="checkbox"] {
+    /* vertical-align: middle;
+    float: right; */
+    margin-left: auto;
+    order: 2;
+    transform: scale(2);
+}
+
+.deleteButton {
+    margin: 15px;
+}
+
+.editButton {
+    margin: 15px;
+}

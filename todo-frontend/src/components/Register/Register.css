@@ -1,0 +1,29 @@
+@media all and (min-width: 480px) {
+    .Register {
+      padding: 60px 0;
+    }
+  
+    .Register form {
+      margin: 0 auto;
+      max-width: 320px;
+    }
+
+    .Register button {
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .Register div {
+      margin-top: 10px;
+    }
+
+    .Register form{
+      color: #434343;
+      border-radius: 1px;
+      margin-bottom: 15px;
+      background: #fff;
+      border: 1px solid #f3f3f3;
+      box-shadow: 0px 2px 2px rgb(0 0 0 / 30%);
+      padding: 30px;
+    }
+  }

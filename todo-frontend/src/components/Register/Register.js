@@ -4,30 +4,36 @@ import Button from "react-bootstrap/Button";
 
 import "./Register.css";
 import { useAppContext } from "../../lib/contextLib";
+import {
+  useNavigate
+} from 'react-router-dom';
 
+import { toast } from 'react-toastify';
 
 const Register = (props) => {
-  const { userHasAuthenticated } = useAppContext();
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   function validateForm() {
     return username.length > 0 && password.length > 0;
   }
 
-  async function loginUser(credentials) {
-    return fetch('http://localhost:7999/api/login', {
+  async function registerUser(credentials) {
+    return fetch('http://localhost:7999/api/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(credentials)
-    })
-      .then(data => data.json())
+    });
    }
-  
 
+  function timeout(delay) {
+    return new Promise(res => setTimeout(res, delay));
+  }
+  
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -36,20 +42,35 @@ const Register = (props) => {
         password
     };
 
-    const res = await loginUser(credentials);
-    if ('token' in res) {
-        localStorage.setItem('accessToken', res.token);
-        userHasAuthenticated(true);
+    const res = await registerUser(credentials);
+    console.log(res);
+    const body = await res.json()
+    console.log(body)
+    if (res.ok) {
+        // console.log(`success: ${res.message}`);
+        const notify = () => toast("User Account Created", {
+          toastId: 'registered'
+        });
+        notify();
+        await timeout(1500);
+        navigate('/login');
     } else {
-        console.log(`error: ${res.message}`);
+        const notify = () => toast.error(`Failed to create account ${username}: ${body.message}`, {
+          toastId: 'failToRegister'
+        });
+        notify();
+        // console.log(`error: ${res.message}`);
     }
 
   }
 
   return (
-    <div className="Login">
+    <div className="Register">
 
       <Form onSubmit={handleSubmit}>
+        <h2 style={{
+              textAlign: 'center'
+        }}>Register</h2>
         <Form.Group size="lg" controlId="email">
           <Form.Label>Username</Form.Label>
           <Form.Control
@@ -70,7 +91,7 @@ const Register = (props) => {
         </Form.Group>
 
         <Button size="lg" type="submit" disabled={!validateForm()}>
-          Login
+          Create new account
         </Button>
 
       </Form>

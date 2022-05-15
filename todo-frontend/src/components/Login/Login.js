@@ -57,6 +57,10 @@ const Login = (props) => {
       await timeout(1500);
       navigate('/', { replace: true })
     } else {
+      const notify = () => toast.error(`Error: ${res.message}`, {
+        toastId: 'failedLogin'
+      });
+      notify();
       console.log(`error: ${res.message}`);
     }
 
@@ -64,8 +68,10 @@ const Login = (props) => {
 
   return (
     <div className="Login">
-
       <Form onSubmit={handleSubmit}>
+        <h2 style={{
+              textAlign: 'center'
+        }}>Login</h2>
         <Form.Group size="lg" controlId="email">
           <Form.Label>Username</Form.Label>
           <Form.Control
