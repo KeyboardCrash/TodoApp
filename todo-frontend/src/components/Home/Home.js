@@ -60,7 +60,7 @@ const Home = (props) => {
                     console.log('Created todo data')
                     return res.json()
                 } else {
-                    const notify = () => toast.error(`Error: ${res.message}`, {
+                    const notify = () => toast.error(`Could not create todo. Error: ${res.message}`, {
                         toastId: 'failedCreateTodo'
                         });
                     notify();
@@ -184,23 +184,29 @@ const Home = (props) => {
             </div>
             <div className="todoContainer">
                 {/* <button onClick={() => getTodos()}>Load todos</button>  */}
-                <Form onSubmit={handleSubmit} autoComplete="off">
-                    <Form.Group size="lg" controlId="todo">
-                    <Form.Label>Todo</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        type="text"
-                        value={newTodo}
-                        onChange={(e) => setNewTodo(e.target.value)}
-                    />
-                    </Form.Group>
 
+                <div className="newTodoForm">
 
-                    <Button size="lg" type="submit" disabled={!(newTodo.length > 0)}>
-                    Submit todo
-                    </Button>
+                    <div className="newTodoInput">
+                        <Form onSubmit={handleSubmit} autoComplete="off">
+                        <Form.Group size="lg" controlId="todo">
+                        {/* <Form.Label>Create a new todo</Form.Label> */}
+                        <Form.Control
+                            autoFocus
+                            type="text"
+                            value={newTodo}
+                            onChange={(e) => setNewTodo(e.target.value)}
+                        />
+                        </Form.Group>
+                        </Form>
+                    </div>
+                    <div className="newTodoButton">
+                        <Button size="lg" type="submit" disabled={!(newTodo.length > 0)}>
+                            Submit
+                        </Button>
+                    </div>
+                </div>
 
-                </Form>
 
                 {/* <ul>
                 {todos.map((todo, i) => {

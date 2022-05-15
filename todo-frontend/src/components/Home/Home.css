@@ -1,5 +1,20 @@
 .Home {
     padding: 25px;
     margin: auto;
-    max-width: 50%;
+    max-width: 75%;
+}
+
+.newTodoForm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+}
+
+.newTodoInput {
+    width: 100%;
+}
+
+.newTodoButton {
+    transform: scale(0.8, 0.8);
 }

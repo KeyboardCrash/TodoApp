@@ -17,15 +17,15 @@ The app should support the following :
 
 UI
 - Login landing page
-    - Page with username, password, login fields and register under that [ ]
+    - Page with username, password, login fields and register under that [x]
 
 - Homepage
-    - Show all Todo's that belong to this user account [ ]
-    - The topbar will just have TodoApp and logout [ ]
-    - Should be a 'Welcome (username)' section right before todo's begin [ ]
+    - Show all Todo's that belong to this user account [x]
+    - The topbar will just have TodoApp and logout [x]
+    - Should be a 'Welcome (username)' section right before todo's begin [x]
 - Todos will render down in a list style [ ]
     - The topmost element will be dotted to denote fill in, can type in a todo and enter/green check to create [ ]
-    - Existing todo's will have checkbox followed by text, with an (x) to delete the todo on rightmost [ ]
+    - Existing todo's will have checkbox followed by text, with an (x) to delete the todo on rightmost [x]
 
 API
 - Authentication

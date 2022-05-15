@@ -44,41 +44,37 @@ function App() {
         const token = localStorage.getItem("accessToken");
 
         if (token) {
-            try {
-                fetch('http://localhost:7999/api/getUsername', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-access-token': token
-                    },
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data) {
-                            console.log(data)
-                            if (data.isLoggedIn === true) {
-                                const redirLoggedIn = async () => {
-                                    const notify = () => toast("Already logged in! Redirecting...", {
-                                        toastId: 'alreadyLoggedIn'
-                                    });
-                                    notify();
-                                    await timeout(1000);
-                                    navigate('/');
-                                }
-                                userHasAuthenticated(true)
-                                redirLoggedIn();
-                            } else {
-                                console.log(`Token invalid: ${token}`)
-                            }
+            fetch('http://localhost:7999/api/getUsername', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': token
+                },
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    console.log(data)
+                    if (data.isLoggedIn === true) {
+                        const redirLoggedIn = async () => {
+                            const notify = () => toast("Already logged in! Redirecting...", {
+                                toastId: 'alreadyLoggedIn'
+                            });
+                            notify();
+                            await timeout(1000);
+                            navigate('/');
                         }
-                    });
-            } catch (e) {
+                        userHasAuthenticated(true)
+                        redirLoggedIn();
+                    } else {
+                        console.log(`Token invalid: ${token}`)
+                    }
+                }
+            })
+            .catch (e => {
                 failedToConnectAlert();
                 console.log(e);
-            }
-
-
-
+            });
         }
     }, []);
 
