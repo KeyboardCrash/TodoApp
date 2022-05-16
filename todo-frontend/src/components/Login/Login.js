@@ -16,6 +16,7 @@ const Login = (props) => {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
     const navigate = useNavigate();
 
@@ -29,7 +30,7 @@ const Login = (props) => {
 
     async function loginUser(credentials) {
 
-        return fetch('http://localhost:7999/api/login', {
+        return fetch(API_ENDPOINT + '/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

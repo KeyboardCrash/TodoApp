@@ -11,12 +11,13 @@ const Home = (props) => {
     const [ todos, setTodos ] = useState([]);
     const [ username, setUsername ] = useState("");
     const [ newTodo, setNewTodo ] = useState("");
+    const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
     async function getTodos() {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
 
-            fetch('http://localhost:7999/api/getAllTodos', {
+            fetch(API_ENDPOINT + '/api/getAllTodos', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,7 +43,7 @@ const Home = (props) => {
     async function createTodo(todo) {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
-            fetch('http://localhost:7999/api/todo', {
+            fetch(API_ENDPOINT + '/api/todo', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -88,7 +89,7 @@ const Home = (props) => {
         const todoId = id
         console.log(`Requested todo id ${todoId}`);
         if (accessToken) {
-            fetch(`http://localhost:7999/api/todo/${todoId}`, {
+            fetch(API_ENDPOINT + `/api/todo/${todoId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -115,7 +116,7 @@ const Home = (props) => {
     async function getUsername() {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
-            fetch('http://localhost:7999/api/getUsername', {
+            fetch(API_ENDPOINT + '/api/getUsername', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -145,7 +146,7 @@ const Home = (props) => {
         const payload = todoObj.payload;
 
         if (accessToken) {
-            fetch(`http://localhost:7999/api/todo/${todoId}`, {
+            fetch(API_ENDPOINT + `/api/todo/${todoId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
