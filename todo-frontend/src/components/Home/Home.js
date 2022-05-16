@@ -27,7 +27,7 @@ const Home = (props) => {
             .then(data => {
                 const parsedTodos = data.message
                 setTodos(parsedTodos)
-                console.log("Todos updated")
+                console.log("Todos updated");
             })
             .catch(e => {
                 helper.failedToConnectAlert();
@@ -51,7 +51,8 @@ const Home = (props) => {
                 body: JSON.stringify({
                     'todo': todo
                 })
-            }).then(res => {
+            })
+            .then(res => {
                 if (res.ok) {
                     const notify = () => toast(`Successfully created todo!`, {
                         toastId: 'createdTodo'
@@ -65,6 +66,12 @@ const Home = (props) => {
                         });
                     notify();
                 }
+            })
+            .then((data) => { 
+                console.log(data)
+                setNewTodo('');
+                const newTodos = data.todos;
+                setTodos(newTodos);
             })
             .catch(e => {
                 helper.failedToConnectAlert();
@@ -167,15 +174,13 @@ const Home = (props) => {
         event.preventDefault();
     
         const todo = newTodo;
-        await createTodo(todo)
-        .then(() => { setNewTodo(''); })
-        .then(() => { getTodos(); })
+        await createTodo(todo);
     }
 
     useEffect(() => {
         getUsername();
         getTodos();
-    }, []);
+    }, [props.todos]);
 
     return (
         <div className="Home">
@@ -201,7 +206,7 @@ const Home = (props) => {
                         </Form>
                     </div>
                     <div className="newTodoButton">
-                        <Button size="lg" type="submit" disabled={!(newTodo.length > 0)}>
+                        <Button onClick={handleSubmit} size="lg" type="submit" disabled={!(newTodo.length > 0)}>
                             Submit
                         </Button>
                     </div>

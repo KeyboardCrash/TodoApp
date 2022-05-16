@@ -66,13 +66,17 @@ router.get('/todo/:id', auth_middlewares.verifyJWT, async function(req, res) {
                 checked: false,
                 todo: todo
             }
-        }, function(err, ret) {
+        }, async function(err, ret) {
             if(err) res.json({message: err});
             console.log(`Created new todo`)
             console.log(ret)
+            const todos = await TodoModel.find({
+                userId: id
+            });
             res.status(201).json({
                 message: "Successfully created todo",
-                created: ret
+                created: ret,
+                todos: todos
             });
         })
 
@@ -133,7 +137,9 @@ router.delete('/todo/:id/', auth_middlewares.verifyJWT, async function(req, res)
                 _id: todoId
             }); 
             if (ret.deletedCount) {
-                const todos = await TodoModel.find();
+                const todos = await TodoModel.find({
+                    userId: id
+                });
                 res.status(202).json({
                     message: `Deleted Todo ${todoId}`,
                     todos: todos

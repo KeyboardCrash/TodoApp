@@ -13,7 +13,6 @@ const Todo = (props) => {
     const [ toggle, setToggle ] = useState(true);
 
     async function update() {
-        console.log("Sending update to server");
         const todoObj = {
             todoId,
             payload: {
@@ -21,6 +20,15 @@ const Todo = (props) => {
                 todo: todoText
             }
         }
+
+        if (todoObj.payload.checked === props.data.payload.checked &&
+            todoObj.payload.todo === props.data.payload.todo) {
+            console.log(`No changes detected for todo ${todoId}`);
+            return;
+        }
+
+        console.log("Sending update to server");
+
         props.updateTodo(todoObj);
 
     }
