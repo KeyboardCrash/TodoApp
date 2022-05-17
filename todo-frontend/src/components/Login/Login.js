@@ -30,7 +30,7 @@ const Login = (props) => {
 
     async function loginUser(credentials) {
 
-        return fetch(API_ENDPOINT + '/api/login', {
+        return fetch(API_ENDPOINT + '/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

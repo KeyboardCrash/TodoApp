@@ -17,7 +17,7 @@ const Home = (props) => {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
 
-            fetch(API_ENDPOINT + '/api/getAllTodos', {
+            fetch(API_ENDPOINT + '/getAllTodos', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ const Home = (props) => {
     async function createTodo(todo) {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
-            fetch(API_ENDPOINT + '/api/todo', {
+            fetch(API_ENDPOINT + '/todo', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ const Home = (props) => {
         const todoId = id
         console.log(`Requested todo id ${todoId}`);
         if (accessToken) {
-            fetch(API_ENDPOINT + `/api/todo/${todoId}`, {
+            fetch(API_ENDPOINT + `/todo/${todoId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -116,7 +116,7 @@ const Home = (props) => {
     async function getUsername() {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
-            fetch(API_ENDPOINT + '/api/getUsername', {
+            fetch(API_ENDPOINT + '/getUsername', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -146,7 +146,7 @@ const Home = (props) => {
         const payload = todoObj.payload;
 
         if (accessToken) {
-            fetch(API_ENDPOINT + `/api/todo/${todoId}`, {
+            fetch(API_ENDPOINT + `/todo/${todoId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

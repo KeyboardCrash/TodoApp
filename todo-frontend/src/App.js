@@ -45,7 +45,7 @@ function App() {
         const token = localStorage.getItem("accessToken");
 
         if (token) {
-            fetch(API_ENDPOINT + '/api/getUsername', {
+            fetch(API_ENDPOINT + '/getUsername', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

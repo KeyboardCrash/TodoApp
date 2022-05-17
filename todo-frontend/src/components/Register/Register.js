@@ -24,7 +24,7 @@ const Register = (props) => {
     }
 
     async function registerUser(credentials) {
-        return fetch(API_ENDPOINT + '/api/register', {
+        return fetch(API_ENDPOINT + '/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ const Register = (props) => {
             });
             notify();
             await timeout(1500);
-            navigate('/login');
+            navigate('/');
         } else {
             const notify = () => toast.error(`Failed to create account ${username}: ${body.message}`, {
                 toastId: 'failToRegister'

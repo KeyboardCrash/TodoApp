@@ -18,12 +18,10 @@ services:
       MONGO_URI: "mongodb://mongodb/todo"
       # Change this to use .env variable on prod
       JWT_SECRET: ${JWT_SECERT}
-    container_name: todo_backend
     restart: unless-stopped
 
   mongodb:
     image : mongo
-    container_name: mongodb
     environment:
     - PUID=1000
     - PGID=1000

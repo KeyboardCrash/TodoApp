@@ -17,12 +17,10 @@ services:
     environment:
       MONGO_URI: "mongodb://mongodb/todo"
       JWT_SECRET: "supersecretkey"
-    container_name: todo_backend
     restart: unless-stopped
 
   mongodb:
     image : mongo
-    container_name: mongodb
     environment:
     - PUID=1000
     - PGID=1000
