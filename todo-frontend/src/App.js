@@ -57,16 +57,17 @@ function App() {
                 if (data) {
                     console.log(data)
                     if (data.isLoggedIn === true) {
-                        const redirLoggedIn = async () => {
-                            const notify = () => toast("Already logged in! Redirecting...", {
-                                toastId: 'alreadyLoggedIn'
-                            });
-                            notify();
-                            await timeout(1000);
-                            navigate('/');
-                        }
+                        // const redirLoggedIn = async () => {
+                        //     const notify = () => toast("Already logged in! Redirecting...", {
+                        //         toastId: 'alreadyLoggedIn'
+                        //     });
+                        //     notify();
+                        //     await timeout(1000);
+                        //     navigate('/');
+                        // }
+                        // redirLoggedIn();
                         userHasAuthenticated(true)
-                        redirLoggedIn();
+                        navigate('/');
                     } else {
                         console.log(`Token invalid: ${token}`)
                     }
