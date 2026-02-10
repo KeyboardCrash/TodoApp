@@ -14,7 +14,6 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() {
     const [isAuthenticated, userHasAuthenticated] = useState(false);
     const navigate = useNavigate();
-    const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
     function timeout(delay) {
         return new Promise(res => setTimeout(res, delay));
@@ -45,7 +44,7 @@ function App() {
         const token = localStorage.getItem("accessToken");
 
         if (token) {
-            fetch(API_ENDPOINT + '/getUsername', {
+            fetch('/api/getUsername', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

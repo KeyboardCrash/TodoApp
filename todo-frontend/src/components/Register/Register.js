@@ -15,7 +15,6 @@ import helper from '../../lib/helper';
 const Register = (props) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
     const navigate = useNavigate();
 
@@ -24,7 +23,7 @@ const Register = (props) => {
     }
 
     async function registerUser(credentials) {
-        return fetch(API_ENDPOINT + '/register', {
+        return fetch('/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

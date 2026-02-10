@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const mongoSanitize = require('express-mongo-sanitize');
 
 const app = express();
-const port = 3000;
+const port = 80;
 const urlencodedParser = bodyParser.urlencoded({ extended: false});
 
 app.use(cors());
@@ -20,11 +20,12 @@ app.use(mongoSanitize({
 
 const todoRoutes = require('./routes/todo');
 const authRoutes = require('./routes/auth');
+
 app.use('/api', todoRoutes);
 app.use('/api', authRoutes);
 
 
-const dbURI: string = process.env.MONGO_URI || "mongodb://mongodb/todo"
+const dbURI: string = process.env.TODO_MONGO_URI
 
 mongoose.connect(dbURI, {
   useUnifiedTopology: true,

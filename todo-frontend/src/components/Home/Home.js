@@ -11,13 +11,12 @@ const Home = (props) => {
     const [ todos, setTodos ] = useState([]);
     const [ username, setUsername ] = useState("");
     const [ newTodo, setNewTodo ] = useState("");
-    const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
     async function getTodos() {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
 
-            fetch(API_ENDPOINT + '/getAllTodos', {
+            fetch('/api/getAllTodos', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -43,7 +42,7 @@ const Home = (props) => {
     async function createTodo(todo) {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
-            fetch(API_ENDPOINT + '/todo', {
+            fetch('/api/todo', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -89,7 +88,7 @@ const Home = (props) => {
         const todoId = id
         console.log(`Requested todo id ${todoId}`);
         if (accessToken) {
-            fetch(API_ENDPOINT + `/todo/${todoId}`, {
+            fetch(`/api/todo/${todoId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -116,7 +115,7 @@ const Home = (props) => {
     async function getUsername() {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
-            fetch(API_ENDPOINT + '/getUsername', {
+            fetch('/api/getUsername', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -146,7 +145,7 @@ const Home = (props) => {
         const payload = todoObj.payload;
 
         if (accessToken) {
-            fetch(API_ENDPOINT + `/todo/${todoId}`, {
+            fetch(`/api/todo/${todoId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
