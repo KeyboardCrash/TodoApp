@@ -1,4 +1,4 @@
 .PHONY: build
 
 build:
-	docker build $(NOCACHE) -t personal-site/todo-backend:latest -f Dockerfile .
+	docker build $(NOCACHE) -t registry.keyboardcrash/todo-backend:latest -f Dockerfile .

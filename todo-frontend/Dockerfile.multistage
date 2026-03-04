@@ -24,10 +24,6 @@ COPY nginx/base /etc/nginx/base
 COPY nginx/conf.d/routes/todoapp.keyboardcrash.com.conf /etc/nginx/conf.d/routes/todoapp.keyboardcrash.com.conf
 COPY nginx/conf.d/nginx.conf /etc/nginx/nginx.conf
 
-RUN sh -c "sed -i 's/keyboardcrash.com/todoapp.keyboardcrash.com/g' /etc/nginx/conf.d/routes/todoapp.keyboardcrash.com.conf && \
-    sed -i 's#root /var/www/keyboardcrash.com/#root /var/www/todoapp;#g' /etc/nginx/conf.d/routes/todoapp.keyboardcrash.com.conf && \
-    sed -i 's/default_server//g' /etc/nginx/conf.d/routes/todoapp.keyboardcrash.com.conf"
-
 RUN rm /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
