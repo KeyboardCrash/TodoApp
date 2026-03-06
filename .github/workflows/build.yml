@@ -1,0 +1,25 @@
+name: Build TodoApp
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  build:
+    name: Build Projects
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build Backend
+        run: |
+          echo "Building Backend..."
+          make -C todo-backend build
+
+      - name: Build Frontend
+        run: |
+          echo "Building Frontend..."
+          make -C todo-frontend build
