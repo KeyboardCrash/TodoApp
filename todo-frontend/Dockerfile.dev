@@ -1,0 +1,17 @@
+# TodoApp/todo-frontend/Dockerfile.dev
+FROM node:22-alpine
+
+WORKDIR /usr/app
+
+# react-scripts needs this for some older node versions or environments
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+# WDS needs to listen on all interfaces
+CMD ["npm", "start"]

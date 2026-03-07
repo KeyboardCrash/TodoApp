@@ -1,0 +1,42 @@
+# TodoApp/docker-compose.dev.yml
+services:
+  todo-api:
+    build:
+      context: ./todo-backend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8081:80"
+    volumes:
+      - ./todo-backend:/usr/app
+      - /usr/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - MONGO_URI=mongodb://mongodb:27017/todoapp
+    depends_on:
+      - mongodb
+    restart: always
+
+  todo-frontend:
+    build:
+      context: ./todo-frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./todo-frontend:/usr/app
+      - /usr/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    restart: always
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: always
+
+volumes:
+  mongodb_data:

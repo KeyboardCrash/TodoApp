@@ -1,0 +1,16 @@
+# TodoApp/todo-backend/Dockerfile.dev
+FROM node:22-alpine
+
+WORKDIR /usr/app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+# backend runs on 80 by default in package.json/server.js based on personal-site config
+# but common practice is to listen on 3001 or similar and proxy.
+# Let's check common port.
+EXPOSE 80
+
+CMD ["npm", "run", "dev"]
