@@ -1,37 +1,28 @@
-# TodoApp/todo-frontend/Dockerfile
+# TodoApp/todo-frontend/Dockerfile.multistage
 
-# Build stage with minimal base image
-FROM node:22-alpine-slim AS builder
-WORKDIR /app
-
-# Copy package files
+# Base stage for dependencies
+FROM --platform=$BUILDPLATFORM node:22-alpine AS dependencies
+WORKDIR /usr/app
 COPY package*.json ./
+RUN npm ci
 
-# Install dependencies with production flag and cache optimization
-RUN npm ci --omit=dev --only=production --prefer-offline --no-audit --no-fund
-
-# Copy source code
+# Build stage
+FROM --platform=$BUILDPLATFORM dependencies AS build
 COPY . .
-
-# Build the application
 RUN npm run build
 
-# Production: Nginx Static Server with minimal base
+# Production: Nginx Static Server
 FROM nginx:1.28.0-alpine AS final
 
-# Install only necessary tools
-RUN apk add --no-cache gettext
+ARG NGINX_HOST
+ARG NGINX_ROOT_PATH
 
-# Copy built application
-COPY --from=builder /app/build /usr/share/nginx/html
-
-# Copy Nginx configurations
+ENV NGINX_HOST=$NGINX_HOST
+ENV NGINX_ROOT_PATH=$NGINX_ROOT_PATH
+COPY --from=build /usr/app/build /var/www/todoapp
 COPY nginx/base /etc/nginx/base
 COPY nginx/conf.d/routes/todoapp.keyboardcrash.com.conf /etc/nginx/conf.d/routes/todoapp.keyboardcrash.com.conf
 COPY nginx/conf.d/nginx.conf /etc/nginx/nginx.conf
-
-# Remove default config
-RUN rm /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
