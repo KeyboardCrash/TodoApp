@@ -3,9 +3,6 @@ FROM node:24-alpine
 
 WORKDIR /usr/app
 
-# react-scripts needs this for some older node versions or environments
-ENV NODE_OPTIONS=--openssl-legacy-provider
-
 COPY package*.json ./
 RUN npm install
 
