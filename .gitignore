@@ -136,3 +136,5 @@ dist
 db
 # Ignore env
 *.env
+
+build/
