@@ -27,10 +27,7 @@ app.use('/api', authRoutes);
 
 const dbURI: string = process.env.TODO_MONGO_URI
 
-mongoose.connect(dbURI, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-})
+mongoose.connect(dbURI)
 .then(res => {
     app.listen(port, () => {
         console.log(`Todo App server started on port ${port}`)
