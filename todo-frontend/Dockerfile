@@ -1,7 +1,7 @@
 # TodoApp/todo-frontend/Dockerfile.multistage
 
 # Base stage for dependencies
-FROM --platform=$BUILDPLATFORM node:24-alpine AS dependencies
+FROM --platform=$BUILDPLATFORM node:24.16.0-alpine AS dependencies
 WORKDIR /usr/app
 COPY package*.json ./
 RUN npm ci
