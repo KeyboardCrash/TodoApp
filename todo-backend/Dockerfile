@@ -1,11 +1,11 @@
 # Stage 1: Install dependencies with production flag
-FROM --platform=$BUILDPLATFORM node:24.16.0-alpine AS todo-deps
+FROM --platform=$BUILDPLATFORM node:24.14.0-alpine AS todo-deps
 WORKDIR /usr/app
 COPY package*.json ./
 RUN npm ci --only=production --omit=dev --prefer-offline --no-audit --no-fund
 
 # Stage 2: Build the application
-FROM --platform=$BUILDPLATFORM node:24.16.0-alpine AS todo-backend-build
+FROM --platform=$BUILDPLATFORM node:24.14.0-alpine AS todo-backend-build
 WORKDIR /usr/app
 COPY package*.json ./
 RUN npm ci
@@ -13,7 +13,7 @@ COPY . .
 RUN npm run build
 
 # Stage 3: Production runtime image with minimal base
-FROM node:24.16.0-alpine
+FROM node:24.14.0-alpine
 WORKDIR /usr/app
 # Copy only necessary files from build stage
 COPY --from=todo-backend-build /usr/app/build ./build
