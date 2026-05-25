@@ -1,12 +1,14 @@
 # Stage 1: Install dependencies with production flag
 FROM --platform=$BUILDPLATFORM node:24.14.0-alpine AS todo-deps
 WORKDIR /usr/app
+RUN apk add --no-cache python3 make g++
 COPY package*.json ./
 RUN npm ci --only=production --omit=dev --prefer-offline --no-audit --no-fund
 
 # Stage 2: Build the application
 FROM --platform=$BUILDPLATFORM node:24.14.0-alpine AS todo-backend-build
 WORKDIR /usr/app
+RUN apk add --no-cache python3 make g++
 COPY package*.json ./
 RUN npm ci
 COPY . .
