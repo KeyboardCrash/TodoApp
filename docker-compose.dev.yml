@@ -31,7 +31,9 @@ services:
     restart: always
 
   mongodb:
-    image: mongo:latest
+    # Pinned so `docker compose up` does not silently move to a new major.
+    # Matches the production/dev stack in personal-site.
+    image: mongo:9.0.8
     ports:
       - "27017:27017"
     volumes:

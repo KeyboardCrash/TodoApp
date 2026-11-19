@@ -1,7 +1,7 @@
 # TodoApp/todo-frontend/Dockerfile.multistage
 
 # Base stage for dependencies
-FROM --platform=$BUILDPLATFORM node:24.14.0-alpine AS dependencies
+FROM --platform=$BUILDPLATFORM node:24.22.3-alpine AS dependencies
 WORKDIR /usr/app
 COPY package*.json ./
 RUN npm ci
@@ -12,7 +12,7 @@ COPY . .
 RUN npm run build
 
 # Production: Nginx Static Server
-FROM nginx:1.28.0-alpine AS final
+FROM nginx:1.30.7-alpine AS final
 
 ARG NGINX_HOST
 ARG NGINX_ROOT_PATH
