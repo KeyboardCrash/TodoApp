@@ -14,11 +14,6 @@ RUN npm run build
 # Production: Nginx Static Server
 FROM nginx:1.30.7-alpine AS final
 
-ARG NGINX_HOST
-ARG NGINX_ROOT_PATH
-
-ENV NGINX_HOST=$NGINX_HOST
-ENV NGINX_ROOT_PATH=$NGINX_ROOT_PATH
 COPY --from=build /usr/app/build /var/www/todoapp
 COPY nginx/base /etc/nginx/base
 COPY nginx/conf.d/routes/todoapp.keyboardcrash.com.conf /etc/nginx/conf.d/routes/todoapp.keyboardcrash.com.conf
